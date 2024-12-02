@@ -1,6 +1,9 @@
 package mx.edu.utez.integradorademo4e.controller;
 
+import mx.edu.utez.integradorademo4e.Service.IProductoService;
 import mx.edu.utez.integradorademo4e.entity.Producto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/producto")
 public class ProductoController {
 
-
+    @Autowired
+    private IProductoService service;
 
     @PostMapping("/agregarProducto")
-    public boolean agregarProducto(@RequestBody Producto producto) {
-        boolean respuesta = false;
-        return respuesta;
+    public void agregarProducto(@RequestBody Producto producto) {
+        service.crearProducto(producto);
     }
 
 }
