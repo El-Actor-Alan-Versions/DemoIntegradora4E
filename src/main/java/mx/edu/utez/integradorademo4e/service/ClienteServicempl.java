@@ -1,4 +1,4 @@
-package mx.edu.utez.integradorademo4e.Service;
+package mx.edu.utez.integradorademo4e.service;
 
 import mx.edu.utez.integradorademo4e.entity.Cliente;
 import mx.edu.utez.integradorademo4e.entity.dao.IClienteDao;

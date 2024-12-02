@@ -1,6 +1,6 @@
 package mx.edu.utez.integradorademo4e.controller;
 
-import mx.edu.utez.integradorademo4e.Service.ClienteServicempl;
+import mx.edu.utez.integradorademo4e.service.ClienteServicempl;
 import mx.edu.utez.integradorademo4e.entity.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
