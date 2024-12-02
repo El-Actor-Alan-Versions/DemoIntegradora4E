@@ -1,4 +1,4 @@
-package mx.edu.utez.integradorademo4e.entity;
+ package mx.edu.utez.integradorademo4e.entity;
 
 import jakarta.persistence.*;
 
@@ -9,7 +9,11 @@ import java.io.Serializable;
 public class CarritoProducto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected Long id;
+
+    // Cantidad del producto en el carrito
+    private Integer cantidad;
+
 
     // Relación ManyToOne con Cliente
     @ManyToOne
@@ -21,13 +25,9 @@ public class CarritoProducto implements Serializable {
     @JoinColumn(name = "producto_id", nullable = false)
     private Producto producto;
 
-    // Cantidad del producto en el carrito
-    @Column(nullable = false)
-    private Integer cantidad;
 
     public CarritoProducto() {}
 
-    public CarritoProducto(Cliente cliente, Producto producto, Integer cantidad) {}
 
     public Cliente getCliente() {
         return cliente;
@@ -62,6 +62,3 @@ public class CarritoProducto implements Serializable {
     }
 
 }
-
-
-
