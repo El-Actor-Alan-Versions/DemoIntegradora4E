@@ -1,4 +1,4 @@
- package mx.edu.utez.integradorademo4e.entity;
+package mx.edu.utez.integradorademo4e.entity;
 
 import jakarta.persistence.*;
 
@@ -61,4 +61,4 @@ public class CarritoProducto implements Serializable {
         this.cantidad = cantidad;
     }
 
-}
+    }

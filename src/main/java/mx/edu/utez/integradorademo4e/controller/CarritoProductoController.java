@@ -1,4 +1,4 @@
- package mx.edu.utez.integradorademo4e.controller;
+package mx.edu.utez.integradorademo4e.controller;
 
 import mx.edu.utez.integradorademo4e.service.ICarritoProductoService;
 import mx.edu.utez.integradorademo4e.entity.CarritoProducto;
