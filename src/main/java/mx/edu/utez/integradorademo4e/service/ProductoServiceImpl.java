@@ -13,7 +13,6 @@ public class ProductoServiceImpl implements IProductoService{
 
     @Override
     public Producto crearProducto(Producto producto) {
-
         try{
             if(producto != null){
                 dao.save(producto);
