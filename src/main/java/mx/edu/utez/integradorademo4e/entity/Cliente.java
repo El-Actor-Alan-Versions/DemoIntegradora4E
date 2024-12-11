@@ -1,5 +1,6 @@
 package mx.edu.utez.integradorademo4e.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -15,6 +16,7 @@ public class Cliente implements Serializable {
     private String nombre;
 
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<CarritoProducto> carrito;
 
     public Long getId() {
