@@ -37,5 +37,10 @@ public class CarritoProductoServiceImpl implements ICarritoProductoService {
         return dao.findByClienteId(clienteId);
     }
 
+    @Override
+    public void limpiarCarrito(Long clienteId) {
+        List<CarritoProducto> productosCarrito = dao.findByClienteId(clienteId);
+        productosCarrito.forEach(producto -> dao.deleteById(producto.getId()));
+    }
 
 }
