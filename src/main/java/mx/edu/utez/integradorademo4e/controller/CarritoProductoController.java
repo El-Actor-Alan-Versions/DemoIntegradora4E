@@ -2,6 +2,7 @@ package mx.edu.utez.integradorademo4e.controller;
 
 import mx.edu.utez.integradorademo4e.service.ICarritoProductoService;
 import mx.edu.utez.integradorademo4e.entity.CarritoProducto;
+import mx.edu.utez.integradorademo4e.service.IClienteService;
 import mx.edu.utez.integradorademo4e.utils.CustomStack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -17,6 +19,8 @@ public class CarritoProductoController {
 
     @Autowired
     private ICarritoProductoService service;
+    @Autowired
+    private IClienteService service2;
 
     private final Map<Long,CustomStack<CarritoProducto>> historialEliminados= new HashMap<>();
 
@@ -25,6 +29,16 @@ public class CarritoProductoController {
     public CarritoProducto agregar(@RequestBody CarritoProducto carritoProducto) {
         service.addCarritoProducto(carritoProducto);
         return carritoProducto;
+    }
+
+    @GetMapping("/{clienteId}")
+    public ResponseEntity<?> obtenerCarrito(@PathVariable Long clienteId) {
+        try {
+            List<CarritoProducto> carrito = service2.obtenerCarrito(clienteId);
+            return ResponseEntity.ok(carrito);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
     @PostMapping("/eliminar")
@@ -42,11 +56,20 @@ public class CarritoProductoController {
         CustomStack<CarritoProducto> historial = historialEliminados.get(clienteId);
         if (historial != null && !historial.isEmpty()) {
             CarritoProducto productoRestaurado = historial.pop();
-            service.addCarritoProducto(productoRestaurado);
+
+            // Crear una nueva instancia de la entidad para evitar problemas con Hibernate
+            CarritoProducto nuevoProducto = new CarritoProducto();
+            nuevoProducto.setCantidad(productoRestaurado.getCantidad());
+            nuevoProducto.setCliente(productoRestaurado.getCliente());
+            nuevoProducto.setProducto(productoRestaurado.getProducto());
+
+            // Guardar EL CARRITO QUE SE DESHIZO
+            service.addCarritoProducto(nuevoProducto);
             return ResponseEntity.ok("Producto restaurado al carrito.");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No hay eliminaciones para deshacer.");
     }
+
 
 
 }
