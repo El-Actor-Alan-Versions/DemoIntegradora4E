@@ -5,8 +5,10 @@ import mx.edu.utez.integradorademo4e.entity.dao.IClienteDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class ClienteServicempl {
+public class ClienteServicempl implements IClienteService {
     @Autowired
     private IClienteDao iclienteDao;
 
@@ -16,6 +18,12 @@ public class ClienteServicempl {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public List<Cliente> obtenerClientes() {
+        List<Cliente> clientes = iclienteDao.findAll();
+
+        return clientes;
     }
 
 }
