@@ -32,5 +32,10 @@ public class CarritoProductoServiceImpl implements ICarritoProductoService {
         return null;
     }
 
+    @Override
+    public List<CarritoProducto> obtenerCarritoPorCliente(Long clienteId) {
+        return dao.findByClienteId(clienteId);
+    }
+
 
 }
