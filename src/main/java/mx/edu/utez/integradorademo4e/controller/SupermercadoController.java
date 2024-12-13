@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,23 +27,45 @@ public class SupermercadoController {
     @PostMapping("/comprar/{clienteId}")
     public ResponseEntity<String> procesarCompra(@PathVariable Long clienteId) {
         try {
-            // esta lista es por cliente
+            // carrito del cliente
             List<CarritoProducto> productosCarrito = carritoService.obtenerCarritoPorCliente(clienteId);
 
             if (productosCarrito.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El carrito está vacío.");
             }
 
-            // si hay carritos, como se esta comprando, se limpia
+            // Calcular el total y generar los detalles de la compra
+            double totalPagar = 0.0;
+            List<String> detalles = new ArrayList<>();
+            detalles.add("Detalle de compra:");
+
+            for (CarritoProducto item : productosCarrito) {
+                double subtotal = item.getCantidad() * item.getProducto().getPrecio();
+                totalPagar += subtotal;
+                detalles.add(String.format("- %s (Cantidad: %d, Precio: %.2f) -> Subtotal: %.2f",
+                        item.getProducto().getNombre(),
+                        item.getCantidad(),
+                        item.getProducto().getPrecio(),
+                        subtotal));
+            }
+
+            // Agregamos el total al final de los detalles
+            detalles.add(String.format("Total a pagar: %.2f", totalPagar));
+
+            // Limpiamos el carrito tras la compra
             carritoService.limpiarCarrito(clienteId);
 
-            // quitamos al cliente pensando que es el primero de la cola en la caja
+            // Atendemos osea quitamos al cliente en la caja
             cajaService.atenderCliente();
 
-            return ResponseEntity.ok("Compra procesada con éxito.");
+            // Unir los detalles con saltos de línea
+            String mensajeCompra = String.join("\n", detalles);
+
+            return ResponseEntity.ok(mensajeCompra);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar la compra.");
         }
     }
+
 }
 
