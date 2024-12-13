@@ -2,6 +2,7 @@ package mx.edu.utez.integradorademo4e.controller;
 
 import mx.edu.utez.integradorademo4e.service.ICarritoProductoService;
 import mx.edu.utez.integradorademo4e.entity.CarritoProducto;
+import mx.edu.utez.integradorademo4e.service.IClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,8 @@ public class CarritoProductoController {
 
     @Autowired
     private ICarritoProductoService service;
+    @Autowired
+    private IClienteService service2;
 
     @PostMapping("/agregar")// /carrito/agregar
     public CarritoProducto agregar(@RequestBody CarritoProducto carritoProducto) {
