@@ -9,5 +9,6 @@ public interface ICarritoProductoService {
     public CarritoProducto addCarritoProducto(CarritoProducto carritoProducto);
     public CarritoProducto eliminarCarritoProducto(Long id);
     public List<CarritoProducto> obtenerCarritoPorCliente(Long clienteId);
+    public void limpiarCarrito(Long clienteId);
 }
 
