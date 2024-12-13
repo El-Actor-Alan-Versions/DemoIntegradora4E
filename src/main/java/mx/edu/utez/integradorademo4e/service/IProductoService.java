@@ -5,7 +5,4 @@ import mx.edu.utez.integradorademo4e.entity.Producto;
 public interface IProductoService {
 
     public Producto crearProducto(Producto producto);
-
-    ;
-
 }

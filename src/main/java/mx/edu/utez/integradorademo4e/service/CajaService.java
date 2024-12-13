@@ -13,10 +13,8 @@ import java.util.Optional;
 
 @Service
 public class CajaService implements ICajaService {
-
     private final CustomQueue<Cliente> queue = new CustomQueue<>(100);
     private final CustomQueue<Cliente> tempqueue = new CustomQueue<>(100);
-
 
     @Autowired
     private IClienteDao clienteDao;
@@ -35,7 +33,6 @@ public class CajaService implements ICajaService {
             throw new IllegalArgumentException("El cliente con ID " + id + " no existe.");
         }
     }
-
     @Override
     public List<Cliente> verFila() {
         List<Cliente> listaClientes = new ArrayList<>();
@@ -47,21 +44,15 @@ public class CajaService implements ICajaService {
             listaClientes.add(cliente);
             tempQueue.offer(cliente);  // Mantenemos los elementos en la cola temporal
         }
-
         // Después de agregar todos los clientes, restauramos la cola original
         while (!tempQueue.isEmpty()) {
             queue.offer(tempQueue.poll());
         }
-
         return listaClientes;
     }
-
     @Override
     public Cliente atenderCliente() {
-
         Cliente cliente = queue.poll();;
-
         return cliente;
     }
-
 }

@@ -11,17 +11,14 @@ import java.util.Optional;
 
 @Service
 public class CarritoProductoServiceImpl implements ICarritoProductoService {
-
     @Autowired
     ICarritoProductoDao dao;
-
     @Override
     @Transactional
     public CarritoProducto addCarritoProducto(CarritoProducto carritoProducto) {
         dao.save(carritoProducto);
         return carritoProducto;
         }
-
     @Override
     @Transactional
     public CarritoProducto eliminarCarritoProducto(Long id) {
@@ -32,17 +29,13 @@ public class CarritoProductoServiceImpl implements ICarritoProductoService {
         }
         return null;
     }
-
     @Override
     public List<CarritoProducto> obtenerCarritoPorCliente(Long clienteId) {
         return dao.findByClienteId(clienteId);
     }
-
     @Override
     public void limpiarCarrito(Long clienteId) {
         List<CarritoProducto> productosCarrito = dao.findByClienteId(clienteId);
         productosCarrito.forEach(producto -> dao.deleteById(producto.getId()));
     }
-
-
 }

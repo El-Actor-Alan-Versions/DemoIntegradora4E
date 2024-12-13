@@ -12,7 +12,6 @@ import java.util.List;
 public class ClienteServicempl implements IClienteService {
     @Autowired
     private IClienteDao iclienteDao;
-
     public Cliente agregarCliente(Cliente cliente) {
         try {
             return iclienteDao.save(cliente);
@@ -20,7 +19,6 @@ public class ClienteServicempl implements IClienteService {
             return null;
         }
     }
-
     public List<Cliente> obtenerClientes() {
         List<Cliente> clientes = iclienteDao.findAll();
 
@@ -30,5 +28,4 @@ public class ClienteServicempl implements IClienteService {
         Cliente cliente=iclienteDao.findById(id).orElseThrow(()->new RuntimeException("No hay cliente con ese Id"));
         return cliente.getCarrito();
     }
-
 }
